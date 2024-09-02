@@ -3,7 +3,8 @@ import { Group } from '@bpmn-io/properties-panel';
 import {
   DocumentationProps,
   IdProps,
-  NameProps
+  NameProps,
+  CustomProps
 } from './properties';
 
 export default class DmnPropertiesProvider {
@@ -30,7 +31,8 @@ function getGroups(element) {
 
   const groups = [
     GeneralGroup(element),
-    DocumentationGroup(element)
+    DocumentationGroup(element),
+    CustomGroup(element)
   ];
 
   // contract: if a group returns null, it should not be displayed at all
@@ -64,6 +66,20 @@ function DocumentationGroup(element) {
   return {
     id: 'documentation',
     label: 'Documentation',
+    entries,
+    component: Group
+  };
+}
+
+// Define your custom group
+function CustomGroup(element) {
+  const entries = [
+    ...CustomProps({ element }) // This is where your custom properties are added
+  ];
+
+  return {
+    id: 'custom',
+    label: 'Custom Properties',
     entries,
     component: Group
   };
